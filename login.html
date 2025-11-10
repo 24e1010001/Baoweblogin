@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Facebook - Đăng nhập hoặc đăng ký</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      background-color: #f0f2f5;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 80px;
+      padding: 20px;
+    }
+
+    /* --- PHẦN BÊN TRÁI --- */
+    .left {
+      width: 400px;
+    }
+
+    .fb-logo {
+      width: 240px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .left p {
+      font-size: 24px;
+      color: #1c1e21;
+      line-height: 32px;
+    }
+
+    /* --- FORM ĐĂNG NHẬP --- */
+    .login-box {
+      background-color: #fff;
+      padding: 20px 16px 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 380px;
+      text-align: center;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 14px 12px;
+      margin-bottom: 10px;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .login-box input:focus {
+      border-color: #1877f2;
+      box-shadow: 0 0 1px #1877f2;
+    }
+
+    .login-box button {
+      width: 100%;
+      border: none;
+      padding: 14px;
+      border-radius: 6px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-btn {
+      background-color: #1877f2;
+      color: #fff;
+      margin-top: 6px;
+    }
+
+    .login-btn:hover {
+      background-color: #166fe5;
+    }
+
+    .forgot {
+      display: block;
+      margin-top: 12px;
+      color: #1877f2;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .divider {
+      border-bottom: 1px solid #dadde1;
+      margin: 18px 0;
+    }
+
+    .create-btn {
+      background-color: #42b72a;
+      color: white;
+      width: 70%;
+    }
+
+    .create-btn:hover {
+      background-color: #36a420;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      display: none;
+      margin-bottom: 10px;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .left {
+        width: auto;
+      }
+      .fb-logo {
+        width: 200px;
+      }
+      .left p {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Bên trái -->
+    <div class="left">
+      <!-- SVG logo Facebook (luôn hiển thị, không cần internet) -->
+      <svg class="fb-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216 216" color="#1877f2">
+        <path fill="#1877f2" d="M204.1 0H11.9C5.3 0 0 5.3 0 11.9v192.3c0 6.6 5.3 11.9 11.9 11.9h103.6v-83.7H88.1v-32.6h27.4V74.4c0-27.1 16.6-41.9 40.9-41.9 11.6 0 21.6.9 24.5 1.3v28.4h-16.8c-13.2 0-15.8 6.3-15.8 15.5v20.3h31.6l-4.1 32.6h-27.5v83.7h54c6.6 0 11.9-5.3 11.9-11.9V11.9c0-6.6-5.3-11.9-11.9-11.9z"/>
+      </svg>
+
+      <p>Facebook giúp bạn kết nối và chia sẻ với mọi người trong cuộc sống của bạn.</p>
+    </div>
+
+    <!-- Bên phải -->
+    <div class="login-box">
+      <form id="loginForm" onsubmit="return false;">
+        <div class="error" id="errorMsg">Sai tài khoản hoặc mật khẩu.</div>
+
+        <input type="text" id="username" placeholder="Email hoặc số điện thoại" required>
+        <input type="password" id="password" placeholder="Mật khẩu" required>
+
+        <button class="login-btn" id="loginBtn">Đăng nhập</button>
+
+        <a href="#" class="forgot">Quên mật khẩu?</a>
+
+        <div class="divider"></div>
+
+        <button type="button" class="create-btn">Tạo tài khoản mới</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const VALID_USER = "admin";
+    const VALID_PASS = "123";
+
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value;
+
+      if (u === VALID_USER && p === VALID_PASS) {
+        sessionStorage.setItem('fb_logged_in', 'true');
+        window.location.href = "home/home.html";
+      } else {
+        document.getElementById('errorMsg').style.display = "block";
+      }
+    });
+
+    // Nếu đã đăng nhập, chuyển luôn sang home
+    if (sessionStorage.getItem('fb_logged_in') === 'true') {
+      window.location.href = "home/home.html";
+    }
+  </script>
+
+</body>
+</html>
